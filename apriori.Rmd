@@ -1,0 +1,32 @@
+Apriori algorithm in R
+==================
+
+In this example I use data and functions from R package arules.Dataset used is a census income database. 
+While this might not be most suitable for mining for interesting patterns, it still can be used as example. 
+```{r warning=FALSE, message=FALSE}
+require(arules)
+data(Adult)
+data(AdultUCI)
+```
+
+
+ 
+I used already preprocessed data Adult was already prepared and coerced to transactions class for use with  
+arules package. 
+In the following command I used apriori algorithm. I specified minimum support level to 0.5, minconfidence to 0.9 and I was only interested in rules of length at least of 4. 
+```{r  warning=FALSE, message=FALSE, results='hide'} 
+rules <- apriori(Adult,
+                 parameter = list(supp = 0.5, conf = 0.9,minlen=4,
+                                 target = "rules"))
+```
+
+```{r }
+summary(rules)
+```
+
+We can inspect the rules with this command.
+```{r}
+inspect((sort(rules, by = "confidence")))
+```
+
+While we found some strong association rules, none of them are of interesting variety. This has to do more with this particular dataset, then a method being used. 
